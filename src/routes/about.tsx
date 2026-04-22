@@ -33,10 +33,10 @@ function About() {
         description="A quick look at who I am, what I've built, and where I'm headed."
       />
 
-      <div className="grid gap-6 lg:grid-cols-[2fr,1fr]">
-        <FadeIn delay={0.05}>
+      <div className="grid gap-6 lg:grid-cols-[2fr,1fr] min-w-0">
+        <FadeIn delay={0.05} className="min-w-0">
           <TerminalWindow title="about.md" accent="amber">
-            <article className="space-y-4 font-mono text-[13px] leading-relaxed text-foreground/90">
+            <article className="space-y-4 font-mono text-[13px] leading-relaxed text-foreground/90 break-words">
               <p>
                 <span className="text-amber"># </span>
                 <span className="font-serif text-xl italic text-foreground not-italic">

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Download, Github, Linkedin, MapPin, User } from "lucide-react";
+import { ArrowRight, Github, Linkedin, MapPin } from "lucide-react";
 import { FadeIn, AsciiRule, TerminalWindow } from "@/components/Section";
 
 export const Route = createFileRoute("/")({
@@ -80,14 +80,7 @@ function Index() {
                     <span>▸</span>
                     ./contact-me
                   </Link>
-                  <a
-                    href="/resume.pdf"
-                    download
-                    className="inline-flex items-center gap-2 border border-border px-3 py-2 text-xs text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
-                  >
-                    <Download className="h-3 w-3" />
-                    resume.pdf
-                  </a>
+
                 </div>
 
                 <AsciiRule className="my-5" />
@@ -122,24 +115,8 @@ function Index() {
 
           {/* Side panel */}
           <FadeIn delay={0.12} className="space-y-4">
-            <TerminalWindow title="profile.jpg" accent="phosphor">
-              <div className="relative aspect-square w-full overflow-hidden border border-dashed border-border bg-background/60">
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-4 text-center">
-                  <User className="h-8 w-8 text-amber" />
-                  <p className="font-mono text-[11px] text-muted-foreground">
-                    [photo placeholder]
-                  </p>
-                  <p className="font-mono text-[10px] text-muted-foreground/70">
-                    drop into src/assets/profile.jpg
-                  </p>
-                </div>
-                {/* corner markers */}
-                <span className="absolute left-1 top-1 font-mono text-[10px] text-amber">┌</span>
-                <span className="absolute right-1 top-1 font-mono text-[10px] text-amber">┐</span>
-                <span className="absolute bottom-1 left-1 font-mono text-[10px] text-amber">└</span>
-                <span className="absolute bottom-1 right-1 font-mono text-[10px] text-amber">┘</span>
-              </div>
-              <div className="mt-3 space-y-1 font-mono text-[11px] text-muted-foreground">
+            <TerminalWindow title="profile.txt" accent="phosphor">
+              <div className="space-y-1 font-mono text-[11px] text-muted-foreground">
                 <p>
                   <span className="text-amber">status</span> ·{" "}
                   <span className="text-phosphor">● available</span>
@@ -194,7 +171,7 @@ const skillCategories = [
     title: "ai_ml",
     items: ["PyTorch", "Transformers", "RAG", "LangChain", "LlamaIndex", "ChromaDB"],
   },
-  { title: "frontend", items: ["React", "Angular", "TailwindCSS"] },
+  { title: "frontend", items: ["React", "Angular"] },
   { title: "databases", items: ["MongoDB", "MySQL"] },
   {
     title: "concepts",

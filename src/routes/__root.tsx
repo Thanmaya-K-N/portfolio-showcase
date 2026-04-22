@@ -79,6 +79,7 @@ function RootComponent() {
           <Outlet />
         </div>
         <Footer />
+        <Toaster />
       </div>
     </ThemeProvider>
   );

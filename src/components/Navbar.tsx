@@ -2,15 +2,14 @@ import { Link, useLocation } from "@tanstack/react-router";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/hooks/use-theme";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/resume", label: "Resume" },
-  { to: "/projects", label: "Projects" },
-  { to: "/contact", label: "Contact" },
+  { to: "/", label: "~", name: "home" },
+  { to: "/about", label: "about", name: "about" },
+  { to: "/resume", label: "resume", name: "resume" },
+  { to: "/projects", label: "projects", name: "projects" },
+  { to: "/contact", label: "contact", name: "contact" },
 ] as const;
 
 export function Navbar() {
@@ -20,7 +19,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 4);
     onScroll();
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
@@ -31,70 +30,79 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300",
+        "sticky top-0 z-50 w-full border-b transition-all",
         scrolled
-          ? "border-b border-border bg-background/80 backdrop-blur-xl"
-          : "bg-transparent"
+          ? "border-border bg-background/85 backdrop-blur-md"
+          : "border-transparent bg-background/40 backdrop-blur-sm"
       )}
     >
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link to="/" className="font-display text-lg font-semibold tracking-tight">
-          <span className="text-gradient">Thanmaya</span>
-          <span className="text-muted-foreground">.dev</span>
+      <nav className="mx-auto flex h-12 max-w-6xl items-center justify-between px-4 sm:px-6">
+        <Link to="/" className="group flex items-center gap-2 font-mono text-sm">
+          <span className="text-amber">●</span>
+          <span className="text-muted-foreground">thanmaya</span>
+          <span className="text-foreground">@</span>
+          <span className="text-phosphor">portfolio</span>
+          <span className="text-muted-foreground">:~$</span>
         </Link>
 
         <div className="hidden items-center gap-1 md:flex">
-          {links.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
-                pathname === l.to ? "text-foreground" : "text-muted-foreground"
-              )}
-              activeProps={{ className: "text-foreground" }}
-            >
-              {l.label}
-            </Link>
-          ))}
+          {links.map((l) => {
+            const active = pathname === l.to;
+            return (
+              <Link
+                key={l.to}
+                to={l.to}
+                className={cn(
+                  "group relative px-2.5 py-1 font-mono text-xs transition-colors",
+                  active ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <span className={cn("mr-1", active ? "text-amber" : "text-muted-foreground/60")}>
+                  {active ? "▸" : " "}
+                </span>
+                {l.label}
+              </Link>
+            );
+          })}
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="icon"
+        <div className="flex items-center gap-1">
+          <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
+            className="flex h-8 w-8 items-center justify-center rounded-sm border border-border text-muted-foreground transition-colors hover:border-amber hover:text-amber"
           >
-            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
+            {theme === "dark" ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
+          </button>
+          <button
+            className="flex h-8 w-8 items-center justify-center rounded-sm border border-border text-muted-foreground hover:border-amber hover:text-amber md:hidden"
             onClick={() => setOpen((o) => !o)}
             aria-label="Menu"
           >
-            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-          </Button>
+            {open ? <X className="h-3.5 w-3.5" /> : <Menu className="h-3.5 w-3.5" />}
+          </button>
         </div>
       </nav>
 
       {open && (
         <div className="border-t border-border bg-background md:hidden">
-          <div className="mx-auto flex max-w-6xl flex-col px-4 py-2">
-            {links.map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                className={cn(
-                  "rounded-md px-3 py-3 text-sm font-medium",
-                  pathname === l.to ? "bg-accent text-accent-foreground" : "text-muted-foreground"
-                )}
-              >
-                {l.label}
-              </Link>
-            ))}
+          <div className="mx-auto flex max-w-6xl flex-col px-4 py-2 font-mono text-sm">
+            {links.map((l) => {
+              const active = pathname === l.to;
+              return (
+                <Link
+                  key={l.to}
+                  to={l.to}
+                  className={cn(
+                    "flex items-center gap-2 px-2 py-2.5",
+                    active ? "text-amber" : "text-muted-foreground"
+                  )}
+                >
+                  <span>{active ? "▸" : "·"}</span>
+                  <span>{l.label}</span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       )}
